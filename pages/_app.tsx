@@ -1,8 +1,18 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import * as React from "react";
+import { AppProps } from "next/app";
+import { EmotionCache } from "@emotion/react";
+import MUIProvider from "../src/theme/MUIProvider";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+export interface MUIAppProps extends AppProps {
+  emotionCache?: EmotionCache;
 }
 
-export default MyApp
+const App: React.FC<MUIAppProps> = ({ Component, emotionCache, pageProps }) => {
+  return (
+    <MUIProvider emotionCache={emotionCache}>
+      <Component {...pageProps} />
+    </MUIProvider>
+  );
+};
+
+export default App;
