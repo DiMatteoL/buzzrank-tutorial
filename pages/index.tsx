@@ -1,12 +1,13 @@
-import { Box, Button, css, Typography } from "@mui/material";
+import { Button, css, Typography } from "@mui/material";
 import type { NextPage } from "next";
-import { useContext } from "react";
-import PreferredThemeContext from "../src/theme/PreferredThemeContext";
+import { useDarkMode } from "next-dark-mode";
 
 const Home: NextPage = () => {
-  const { preferredTheme, setPreferredTheme } = useContext(
-    PreferredThemeContext
-  );
+  const {
+    darkModeActive, // boolean - whether the dark mode is active or not
+    switchToDarkMode, // function - toggles the dark mode on
+    switchToLightMode, // function - toggles the light mode on
+  } = useDarkMode();
   return (
     <main
       css={css`
@@ -20,10 +21,12 @@ const Home: NextPage = () => {
         }
       `}
     >
-      <Typography variant="h3">Currently in {preferredTheme} mode</Typography>
+      <Typography variant="h3">
+        Currently in {darkModeActive ? "dark" : "light"} mode
+      </Typography>
       <Button
         onClick={() =>
-          setPreferredTheme(preferredTheme === "dark" ? "light" : "dark")
+          darkModeActive ? switchToLightMode() : switchToDarkMode()
         }
         variant="contained"
       >
